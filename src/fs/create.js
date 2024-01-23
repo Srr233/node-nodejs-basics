@@ -1,16 +1,28 @@
 import fs from "fs/promises";
 
-const pathToFiles = process.cwd() + "\\src\\fs\\files";
+const pathToFiles = process.cwd() + "\\src\\fs\\";
+
+async function dirOrFileExist(path) {
+  try {
+    await fs.access(path);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 const create = async () => {
-  await fs
-    .access(pathToFiles + "\\fresh.txt")
-    .then(() => {
-      throw Error("FS operation failed");
-    })
-    .catch(async (err) => {
-      if (err.message === "FS operation failed") throw err;
-      await fs.writeFile(pathToFiles + "\\fresh.txt", "I am fresh and young");
-    });
+  const existFreshFile = await dirOrFileExist(
+    pathToFiles + "files\\" + "fresh.txt"
+  );
+  if (!existFreshFile) {
+    await fs.writeFile(
+      pathToFiles + "files" + "\\fresh.txt",
+      "I am fresh and young"
+    );
+  } else {
+    throw new Error("FS operation failed");
+  }
 };
 
 await create();
