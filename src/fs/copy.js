@@ -16,7 +16,7 @@ const copy = async () => {
   const existFilesCopyFolder = await dirOrFileExist(pathToFiles + "files_copy");
 
   if (existFilesFolder && !existFilesCopyFolder) {
-    const data = await fs.readdir(pathToFiles + "files_copy");
+    const data = await fs.readdir(pathToFiles + "files");
     await fs.mkdir(pathToFiles + "files_copy");
 
     for (const name of data) {
